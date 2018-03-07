@@ -9,8 +9,16 @@ const axios = require('axios');
 // parse application/json
 app.use(bodyParser.json())
 
+app.use(function(req, res, next) {
+    res.header('Access-Control-Allow-Origin', req.headers.origin || "*");
+    res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,HEAD,DELETE,OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type,x-requested-with');
+    next();
+  });
+
 
 app.post('/interface', (req, res) => {
+
 
     const data = req.body.data;
 
@@ -20,7 +28,7 @@ app.post('/interface', (req, res) => {
             res.send(response.data);
         })
         .catch(function (error) {
-          console.log(error);
+          res.send(error.response.data);
         });
     }
     else if(data.method === "GET"){
@@ -29,7 +37,7 @@ app.post('/interface', (req, res) => {
             res.send(response.data);
         })
         .catch(function(error){
-            console.log(error);
+            res.send(error.response.data);
         })
     }
     else{
