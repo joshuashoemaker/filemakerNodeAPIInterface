@@ -40,6 +40,15 @@ app.post('/interface', (req, res) => {
             res.send(error.response.data);
         })
     }
+    else if(data.method === "PUT"){
+        put(data)
+        .then(function(response){
+            res.send(response.data);
+        })
+        .catch(function(error){
+            res.send(error.response.data);
+        })
+    }
     else{
         res.send('Request not possible. Most likly this error is cause by the "Method" not being set in your request body');
     }
@@ -54,4 +63,10 @@ const get = data =>{
     return axios.get(data.url,  {headers : data.headers});
 }
 
-app.listen(8000, () => console.log("FM Data API Interface listening on port 8000"));
+const put = data =>{
+    return axios.put(data.url, data.body,  {headers : data.headers});
+}
+
+const port = process.env.PORT || 3000
+
+app.listen(port, () => console.log("FM Data API Interface listening on port " + port));
