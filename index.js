@@ -56,7 +56,7 @@ const get = data => {
 }
 
 const patch = data => {
-  return axios.put(data.url, data.body, {headers: data.headers})
+  return axios.patch(data.url, data.body, {headers: data.headers})
 }
 
 const port = process.env.PORT || 3000
